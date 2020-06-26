@@ -15,9 +15,8 @@
             <td>{{details.email}}</td>
         </tr>
         </table>
-        <button type="button" class="btn btn-warning"> <span data-toggle="modal" data-target="#editModal">
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal">
           Change Password
-      </span>
       </button>
       <!--Modal to change paswd-->
       <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
@@ -32,16 +31,16 @@
                 <div class="modal-body">
                     <form >
                       <div class="form-group">
-                        <label for="password" class="text-white">New Password:</label>
+                        <label for="password">New Password:</label>
                         <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="details.password">
                       </div>
                       <div class="form-group">
-                        <label for="password" class="text-white">Confirm Password:</label>
+                        <label for="password">Confirm Password:</label>
                         <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="temp">
                       </div>
                         </form>
                 <div class="modal-footer">
-                    <button type="submit" (click)="changePswd(details._id,details.password)" class="btn-success btn-md login_btn" data-dismiss="modal">Submit</button>
+                    <button type="submit" (click)="changePswd(details._id,details.password)" class="btn-success btn-md" data-dismiss="modal">Submit</button>
                 </div>
             </div>
         </div>
@@ -51,8 +50,9 @@
     </div>
   </div>
   <br> <br>
-    <h2 *ngIf="details.roles=='admin'" class="text-center">Accounts</h2>
-  <table *ngIf="details.roles=='admin'" class="table table-striped table-dark table-bordered table-hover">
+<div *ngIf="details.roles=='admin'">
+    <h2  class="text-center">Accounts</h2>
+  <table class="table table-striped table-dark table-bordered table-hover">
     <thead>
         <tr>
             <th>#</th>
@@ -64,7 +64,7 @@
     </thead>
     <tbody>
       <tr *ngIf="account?.length==0">
-          <td colspan="4" class="text-center">No Users!</td>
+          <td colspan="5" class="text-center">No Users!</td>
       </tr>
       <tr  *ngFor="let acc of account; let i = index;">
           <td>{{i+1}}</td>
@@ -78,10 +78,10 @@
     </tbody>
   </table>
 <br>
-<div *ngIf="details.roles=='admin'" class="text-right">
+<div class="text-right">
   <button type="button" class="btn btn-warning" data-toggle="tooltip" title="Add New User"> <span data-toggle="modal" data-target="#registerModal">Register</span></button>
 </div>
-
+</div>
 <!--Modal to Register User-->
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog">
   <div class="modal-dialog">

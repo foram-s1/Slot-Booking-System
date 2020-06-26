@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../schedule.service';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../authentication.service';
-import * as moment from 'moment' 
 import { AppComponent } from '../app.component';
 
 interface Event {
@@ -49,6 +47,7 @@ export class RequestComponent implements OnInit {
   ngOnInit(): void {
     this.loadEvents()
   }
+
   public count:number
   loadEvents(): void {
     this.count=0
@@ -79,7 +78,6 @@ export class RequestComponent implements OnInit {
             if(element.status==="Pending"){
               this.events.push(element)
             this.count++
-
             }
           });
         }
@@ -103,12 +101,6 @@ export class RequestComponent implements OnInit {
       }) 
     }
   }
-  // displayDate(start): string {
-  //   return moment(start).format("DD/MM/YYYY").toString()
-  // }
-  // displayTime(start):string{
-  //   return moment(start).format("LT").toString()
-  // }
   view(index: number): void {
     this.event = this.events[index]
   }

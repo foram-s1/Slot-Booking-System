@@ -3,7 +3,6 @@ const users = express.Router()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User.model')
-const { use } = require('./Events')
 users.use(cors())
 
 users.post('/register', (req, res) => {

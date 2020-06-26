@@ -18,7 +18,6 @@
     "jsonwebtoken": "8.5.1",
     "mongoose": "5.9.19",
     "ngx-toastr": "^12.1.0",
-    "path": "^0.12.7",
-    "socket.io": "2.3.0"
+    "path": "^0.12.7"
   }
 }

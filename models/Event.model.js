@@ -37,12 +37,5 @@ var EventSchema = mongoose.Schema({
 		default: "Pending"
 	}
 })
-EventSchema.path('startTime').validate(function (value) {
-	var isValid = true;
-	if (value < new Date()) {
-		isValid = false;
-	}
-	return isValid;
-}, "The event can not be scheduled in the past");
 
 const Event = module.exports = mongoose.model('event', EventSchema)

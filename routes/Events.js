@@ -2,13 +2,7 @@ const express = require('express')
 var router = express.Router()
 const jwt = require('jsonwebtoken')
 const Event = require('../models/Event.model')
-const User = require('../models/User.model')
 
-let stat = {
-    "Pending": 1,
-    "Accepted": 2,
-    "Denied": 3
-}
 //user events
 router.get('/event', (req, res) => {
     var decoded = jwt.verify(req.headers['authorization'], 'secret')
@@ -28,8 +22,8 @@ router.get('/event', (req, res) => {
         })
     }
 })
+
 router.get('/event/get', (req, res) => {
-    var decoded = jwt.verify(req.headers['authorization'], 'secret')
     Event.find({}).then((doc) => {
         res.json({ doc })
     }).catch((error) => {
@@ -50,9 +44,8 @@ router.post('/event/add', (req, res) => {
         classRoom: req.body.classRoom,
         user_id: decoded._id
     })
-    var value="Accepted"
     Event.findOne({
-        startDate: req.body.startDate, classRoom: req.body.classRoom,status: value,
+        startDate: req.body.startDate, classRoom: req.body.classRoom,status: "Accepted",
         $or: [
             {
                 $and: [
@@ -141,7 +134,7 @@ router.post('/event/search', (req, res) => {
                 }, {
                     status: { $regex: value, $options: 'ig', }, user_id: decoded._id,
                 }, {
-                    startDate: { $regex: value, $options: 'ig', }
+                    startDate: { $regex: value, $options: 'ig', }, user_id: decoded._id,
                 }
             ]
         }, (err, doc) => {
@@ -174,7 +167,6 @@ router.delete('/event/:id', (req, res) => {
 
 //edit event
 router.put('/event/:id', (req, res) => {
-    var decoded = jwt.verify(req.headers['authorization'], 'secret')
     if(req.body.status==="Accepted"){
         Event.findOne({ _id: req.params.id }).then((docs) => {
             Event.findOne({

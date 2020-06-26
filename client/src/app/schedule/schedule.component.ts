@@ -87,7 +87,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit{
 				});
 			}
 		})
-		this.calAPI.removeAllEvents()
+		
 	}
 
 	addEvent(): void {
@@ -101,21 +101,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit{
 			if(data.error){
 			  this.toastr.error("Clash Found")
 			}else{
-			//   this.event = {
-			// 	_id: "",
-			// 	name: "",
-			// 	user_id:"",
-			// 	title: "",
-			// 	startTime:"",
-			// 	startDate:"",
-			// 	endTime: "",
-			// 	endDate: "",
-			// 	description:"",
-			// 	classRoom: "",
-			// 	status: ""
-			//   }
 			  this.toastr.success('Request Sent Successfully!!')
-			  //this.loadData();
 			}
 		  })
 			this.cancel();

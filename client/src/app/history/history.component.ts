@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../schedule.service';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { AuthenticationService } from '../authentication.service';
@@ -47,7 +46,7 @@ export class HistoryComponent implements OnInit {
     status: ""
   }
 
-  constructor(private scheduleService:ScheduleService, private router: Router, private toastr: ToastrService, public auth:AuthenticationService) { }
+  constructor(private scheduleService:ScheduleService,  private toastr: ToastrService, public auth:AuthenticationService) { }
 
   ngOnInit(): void {
     this.loadEvents()
@@ -85,7 +84,7 @@ export class HistoryComponent implements OnInit {
     if(this.event.title){
       this.scheduleService.searchEvent(this.event.title).subscribe((data:{error,doc})=>{
         if(data.error){
-          console.log("Error in fetching tasks")
+          console.log("Error in fetching event")
         }else{
           data.doc.forEach(element => {
             if(element.status!="Pending"){
@@ -113,13 +112,7 @@ export class HistoryComponent implements OnInit {
     }
   }
 
-  displayDate(start): string {
-    return moment(start).format("DD/MM/YYYY").toString()
-  }
-displayTime(start):string{
-  return moment(start).format("LT").toString()
-}
-  
+
   view(index: number): void {
     this.event = this.events[index]
   }

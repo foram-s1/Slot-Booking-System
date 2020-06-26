@@ -4,7 +4,7 @@
     <br/>
     <div class="d-flex justify-content-center h-100">
         <div class="searchbar">
-          <input class="search_input" type="text" name="" placeholder="Search by date, Title, ClassRoom" [(ngModel)]="event.title" (keyup)="searchEvent()">
+          <input class="search_input" type="text" name="" placeholder="Search by Date, Title, ClassRoom, Status" [(ngModel)]="event.title" (keyup)="searchEvent()">
           <a class="search_icon" type="button"><i class="fa fa-search"></i></a>
         </div>
       </div>
@@ -25,8 +25,7 @@
             <tr *ngIf="count===0">
                 <td colspan="7" class="text-center">No New Events!</td>
             </tr>
-            <ng-container  *ngFor="let event of events; let i=index">
-            <tr *ngIf="event.status=='Pending'">
+            <tr *ngFor="let event of events; let i=index">
                 <td>{{i+1}}</td>
                 <td>{{event.title}}</td>
                 <td>{{event.startDate}}</td>
@@ -41,7 +40,6 @@
                     </button>
                 </td>
             </tr>
-        </ng-container>
         </tbody>
     </table>
 </div>
@@ -92,14 +90,14 @@
                             <td>{{event.description}}</td>
                         </tr>
                             <th><label for="note">Admin Note:</label></th>
-                            <td><input class="form-control" type="text" name="note" placeholder="Write a description" [(ngModel)]="event.adminNote">
+                            <td><input class="form-control" type="text" name="note" placeholder="Write a Note" [(ngModel)]="event.adminNote">
                             </td>
                     </table>
                 </div>
             </div>
             <div class="modal-footer  center">
                 <button type="button" class="btn btn-success" (click)="editEvent(1)" data-dismiss="modal">Accept</button>
-                    <button type="button" class="btn btn-danger" (click)="editEvent(2)" data-dismiss="modal">Denied</button>
+                <button type="button" class="btn btn-danger" (click)="editEvent(2)" data-dismiss="modal">Denied</button>
             </div>
         </div>
     </div>

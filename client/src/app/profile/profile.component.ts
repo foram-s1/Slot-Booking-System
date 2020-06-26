@@ -16,23 +16,8 @@ interface UserDetail {
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  public temp:string
 
-  constructor(public auth:AuthenticationService, private toastr:ToastrService) { }
-  ngOnInit(): void {
-    this.auth.profile().subscribe(
-      user=>{
-        this.details= user
-        if(this.details.roles=="admin"){
-          this.accounts()
-        }
-      },
-      err=>{
-        console.error(err)
-      }
-    )
-    
-  }
+  public temp:string
 
   details: UserDetail= {
     _id: "",
@@ -42,9 +27,36 @@ export class ProfileComponent implements OnInit {
     roles: ""
   }
 
+  detail: UserDetail= {
+    _id: "",
+    email: "",
+    password: "",
+    name: "",
+    roles: ""
+  }
+  
+account:UserDetail[]=[]
+
+  constructor(public auth:AuthenticationService, private toastr:ToastrService) { }
+
+  ngOnInit(): void {
+    this.auth.profile().subscribe(
+      user=>{
+        this.details= user
+        if(this.details.roles=="admin"){
+          this.accounts()
+        }
+      },
+      err=>{
+        console.log('Error in fetching tasks')
+      }
+    )
+    
+  }
+
   changePswd(id:string, pswd:string): void {
-    if(window.confirm("Are you sure you want to change password")){
-      if(this.details.password===this.temp){ 
+    if(this.details.password===this.temp){ 
+      if(window.confirm("Are you sure you want to change your password?")){
         this.auth.changePswd(this.details._id, this.temp).subscribe((data:{error, doc})=>{
           if(data.error){
             this.toastr.error("Error in editing details")
@@ -52,19 +64,11 @@ export class ProfileComponent implements OnInit {
             this.toastr.success("Password Updated Successfully!")
           }
         }) 
-      }else{
-        this.toastr.error("Password must be equal")
       }
+    }else{
+      this.toastr.error("Password must be equal")
     }
     this.ngOnInit()
-  }
-
-  detail: UserDetail= {
-    _id: "",
-    email: "",
-    password: "",
-    name: "",
-    roles: ""
   }
 
   register():void{
@@ -87,7 +91,6 @@ export class ProfileComponent implements OnInit {
     this.cancel()
     this.accounts()
   }
-account:UserDetail[]=[]
 
   accounts() : void{
     this.auth.accounts().subscribe((data: {doc,err})=>{
@@ -106,7 +109,7 @@ delAccount(id:string):void{
         this.accounts();
         this.toastr.success("Deleted Successfully")
       }else{
-        this.toastr.error("Error in deleting event!")
+        this.toastr.error("Error in deleting account!")
       }
     })
   }

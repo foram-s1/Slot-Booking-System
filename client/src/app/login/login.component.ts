@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AuthenticationService, TokenPayload } from '../authentication.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { NgForm } from '@angular/forms';
 
 @Component({
   templateUrl: './login.component.html',
@@ -27,7 +26,6 @@ export class LoginComponent{
       },
       err => {
         this.toastr.error(err)
-        console.error(err)
       }
     )
   }

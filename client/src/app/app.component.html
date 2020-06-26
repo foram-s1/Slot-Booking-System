@@ -1,0 +1,36 @@
+<div class="bg">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars" aria-controls="navbars"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  
+    <div class="collapse navbar-collapse " id="navbars">
+      <a class="navbar-left text-white"><img src="../assets/logo.jpg">&nbsp;&nbsp;&nbsp;Ahmedabad University</a>
+      <ul class="navbar-nav  ml-auto ">
+        <li *ngIf="!auth.isLogInUser() && !auth.isLogInAdmin()" class="nav-item">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
+        <li *ngIf="!auth.isLogInUser() && !auth.isLogInAdmin()" class="nav-item ">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li *ngIf= "auth.isLogInAdmin()" class="nav-item ">
+          <a class="nav-link" routerLink="/request">Request&nbsp;<sup><span class="badge badge-success">N</span></sup></a>
+        </li>
+        <li *ngIf="auth.isLogInAdmin() || auth.isLogInUser()" class="nav-item ">
+          <a class="nav-link" routerLink="/history">History</a>
+        </li>
+        <li *ngIf= "auth.isLogInAdmin() || auth.isLogInUser()" class="nav-item ">
+          <a class="nav-link" routerLink="/event">Schedule</a>
+        </li>
+        <li *ngIf="auth.isLogInUser() || auth.isLogInAdmin()" class="nav-item ">
+          <a class="nav-link" routerLink="/profile">Profile</a>
+        </li>
+        <li *ngIf="auth.isLogInUser() || auth.isLogInAdmin()" class="nav-item ">
+          <a class="nav-link" routerLink="" (click)="auth.logout()">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<router-outlet></router-outlet>

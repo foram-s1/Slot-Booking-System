@@ -1,0 +1,57 @@
+<div class="container calendar">
+    <full-calendar #cal [options]='options'></full-calendar>
+</div>
+<div class="text-right" >
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal">
+        Book Event
+    </button>
+</div>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Book Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancel()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You can book events a day before and atmost 3 months from now.</p>
+                <form >
+                    <div class="form-group">
+                      <label for="title">Title:</label>
+                      <input type="title" class="form-control" name="title" placeholder="Enter title" [(ngModel)]="event.title">
+                    </div>
+                    <div class="form-group">
+                      <label for="date">Start DateTime:</label>
+                      <input type="date" min="2020-06-27" class="form-control" name="date" placeholder="DD/MM/YYYY" [(ngModel)]="event.startDate">
+                      <input type="time" class="form-control" name="time" placeholder="HH:MM" [(ngModel)]="event.startTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">End DateTime:</label>
+                        <input type="date" min="2020-06-27" class="form-control" name="date" placeholder="DD/MM/YYYY" [(ngModel)]="event.endDate">
+                        <input type="time" class="form-control" name="time" placeholder="HH:MM" [(ngModel)]="event.endTime">
+                      </div>
+                    <div class="form-group">
+                        <label for="room" class="col-form-label">Classroom:</label>
+                        <select id="room" name="room" class="form-control"[(ngModel)]="event.classRoom">
+                          <option value="" selected disabled >Select Classroom</option>
+                          <option value="G2">G2
+                          <option value="G3">G3
+                          <option value="G4">G4
+                          <option value="G5">G5
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Note">Description:</label>
+                            <textarea class="form-control" rows="3" cols="80" id="Note" name="note" placeholder="Write a description"
+                                [(ngModel)]="event.description"></textarea>
+                    </div>
+                    </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="addEvent()">Send Request</button>
+                <button type="button" class="btn btn-warning" (click)="cancel()" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

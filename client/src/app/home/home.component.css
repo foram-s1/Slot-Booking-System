@@ -1,0 +1,23 @@
+.bg-img{
+	background-image: linear-gradient(rgba(128,128,128,.5), rgba(128,128,128,.5)), url(/assets/img.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: top;
+	height: 92.5vh;
+}
+
+.centered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+  }
+
+.container {
+	position: center;
+	text-align: center;
+	color: black;
+	font-weight: bold;
+	font-size: 4vmax;
+  }
+  

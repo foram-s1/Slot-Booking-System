@@ -1,0 +1,37 @@
+<div class="bg">
+    <div class="container">
+      <div class="d-flex justify-content-center h-100">
+          <div class="card">
+              <div class="card-header text-center">
+                  <h3>Sign In</h3>
+              </div>
+              <div class="card-body">
+                  <form (submit)="login()">
+            <div class="form-group">
+              <label for="email" class="text-white">Email address:</label>
+              <input type="email" class="form-control" name="email" placeholder="Enter email" [(ngModel)]="credentials.email">
+            </div>
+            <div class="form-group">
+              <label for="password" class="text-white">Password:</label>
+              <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="credentials.password">
+            </div>
+            <div class="form-group">
+              <label for="roles" class="text-white">Role:</label>
+              <select id="roles" name="roles" class="form-control"[(ngModel)]="credentials.roles">
+                <option value="" selected disabled >User Type</option>
+                <option value="admin">Admin
+                <option value="faculty">Faculty
+                <option value="club">Club
+              </select>
+            </div>
+      
+            <div class="text-center">
+            <button type="submit" class="btn btn-md login_btn">Sign in</button>
+          </div>
+          </form>
+              </div>
+              
+          </div>
+      </div>
+  </div>
+  </div>

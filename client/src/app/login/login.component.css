@@ -1,0 +1,37 @@
+.bg{
+	background-image: linear-gradient(rgba(128,128,128,.5), rgba(128,128,128,.5)), url(/assets/img.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 92.5vh;
+	font-family: 'Numans', sans-serif;
+	}
+	
+	.container{
+	height: 100%;
+	align-content: center;
+	}
+	
+	.card{
+	height: 400px;
+	margin-top: auto;
+	margin-bottom: auto;
+	width: 400px;
+	background-color: rgba(0,0,0,0.5) !important;
+	}
+	
+	.card-header h3{
+	color: white;
+	}
+
+	.login_btn{
+	color: black;
+	background-color:blueviolet;
+	width: 100px;
+    }
+    
+	.login_btn:hover{
+	color: black;
+	background-color: white;
+	}
+	
+	

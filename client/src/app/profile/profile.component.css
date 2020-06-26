@@ -8,3 +8,7 @@
 .bgd{
     background-color: black;
 }
+.text-right{
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+}

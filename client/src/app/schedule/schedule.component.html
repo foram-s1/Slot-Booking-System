@@ -16,24 +16,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>You can book events a day before and atmost 3 months from now.</p>
+                <h6>Note: You can book events a day before and atmost 3 months from now. <span style="color:red;">All * feilds are compulsory.</span></h6>
                 <form >
                     <div class="form-group">
-                      <label for="title">Title:</label>
+                      <label for="title">Title:*</label>
                       <input type="title" class="form-control" name="title" placeholder="Enter title" [(ngModel)]="event.title">
                     </div>
                     <div class="form-group">
-                      <label for="date">Start DateTime:</label>
+                      <label for="date">Start DateTime:*</label>
                       <input type="date" min="2020-06-27" class="form-control" name="date" placeholder="DD/MM/YYYY" [(ngModel)]="event.startDate">
                       <input type="time" class="form-control" name="time" placeholder="HH:MM" [(ngModel)]="event.startTime">
                     </div>
                     <div class="form-group">
-                        <label for="date">End DateTime:</label>
+                        <label for="date">End DateTime:*</label>
                         <input type="date" min="2020-06-27" class="form-control" name="date" placeholder="DD/MM/YYYY" [(ngModel)]="event.endDate">
                         <input type="time" class="form-control" name="time" placeholder="HH:MM" [(ngModel)]="event.endTime">
                       </div>
                     <div class="form-group">
-                        <label for="room" class="col-form-label">Classroom:</label>
+                        <label for="room" class="col-form-label">Classroom:*</label>
                         <select id="room" name="room" class="form-control"[(ngModel)]="event.classRoom">
                           <option value="" selected disabled >Select Classroom</option>
                           <option value="G2">G2

@@ -95,14 +95,36 @@ export class AuthenticationService {
       headers: { Authorization: ` ${this.getToken()}` }
     })
   }
+
 public changePswd(_id:string, password:string){
-  console.log(password)
   return this.http.put('/users/profile/'+_id,{password:password},{
     headers:{
       Authorization: `${this.getToken()}`
     }
   })
 }
+
+public register(email:string, name: string, password:string, roles:string){
+  return this.http.post('/users/register',{email: email, name: name, password:password, roles:roles},{
+    headers:{
+      Authorization: `${this.getToken()}`
+    }
+  })
+}
+public accounts(): Observable <any> {
+  return this.http.get(`/users/accounts`, {
+    headers: { Authorization: ` ${this.getToken()}` }
+  })
+}
+
+delAccount(id:string){
+  return this.http.delete('/users/account/'+id,{
+    headers:{
+      Authorization: `${this.getToken()}`
+    }
+  })
+}
+
   public logout(): void {
     this.toastr.success('Logged Out Successfully!!')
     this.token = ''

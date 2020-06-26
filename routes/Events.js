@@ -50,12 +50,61 @@ router.post('/event/add', (req, res) => {
         classRoom: req.body.classRoom,
         user_id: decoded._id
     })
-    newEvent.save().then((doc) => {
-        res.json({ doc })
-    }).catch((error) => {
-        res.json({ error })
+    var value="Accepted"
+    Event.findOne({
+        startDate: req.body.startDate, classRoom: req.body.classRoom,status: value,
+        $or: [
+            {
+                $and: [
+                    {
+                        "startTime": {
+                            $lte: req.body.startTime
+                        }
+                    }, {
+                        "endTime": {
+                            $gte: req.body.startTime
+                        }
+                    }
+                ]
+            }, {
+                $and: [
+                    {
+                        "startTime": {
+                            $lte: req.body.endTime
+                        }
+                    }, {
+                        "endTime": {
+                            $gte: req.body.endTime
+                        }
+                    }
+                ]
+            }, {
+                $and: [
+                    {
+                        "startTime": {
+                            $gte: req.body.startTime
+                        }
+                    }, {
+                        "endTime": {
+                            $lte: req.body.endTime
+                        }
+                    }
+                ]
+            }
+        ]
+    }).then((docs) => {
+        if (!docs) {
+            newEvent.save().then((doc) => {
+                res.json({ doc })
+            }).catch((error) => {
+                res.json({ error })
+            })
+        }else{
+            res.json({error:"Clash Found"})
+        }
+    }).catch((err) => {
+        res.json({ err })
     })
-
 })
 
 //search event

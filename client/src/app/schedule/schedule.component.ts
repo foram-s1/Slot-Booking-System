@@ -94,13 +94,12 @@ export class ScheduleComponent implements OnInit, AfterViewInit{
 		const today = moment().format('YYYY-MM-DD');
 		const mon=moment().month()+3
 		const maxday=moment().month(mon).format('YYYY-MM-DD')
-		console.log(maxday)
 		if((this.event.startDate > this.event.endDate)|| (this.event.startTime>=this.event.endTime) || (this.event.startDate<=today) || (this.event.endDate>maxday)){ 
 			this.toastr.error("Invalid Date and Time")
 		}else{
 		  this.scheduleAPI.addEvent( this.event.title, this.event.startTime, this.event.startDate, this.event.endTime, this.event.endDate, this.event.classRoom, this.event.description).subscribe((data:{error, doc})=>{
 			if(data.error){
-			  this.toastr.error("Error in adding new Event")
+			  this.toastr.error("Clash Found")
 			}else{
 			//   this.event = {
 			// 	_id: "",

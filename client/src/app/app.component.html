@@ -15,7 +15,7 @@
           <a class="nav-link" routerLink="/login">Login</a>
         </li>
         <li *ngIf= "auth.isLogInAdmin()" class="nav-item ">
-          <a class="nav-link" routerLink="/request">Request&nbsp;<sup><span class="badge badge-success">N</span></sup></a>
+          <a class="nav-link" routerLink="/request">Request</a>
         </li>
         <li *ngIf="auth.isLogInAdmin() || auth.isLogInUser()" class="nav-item ">
           <a class="nav-link" routerLink="/history">History</a>
@@ -23,8 +23,11 @@
         <li *ngIf= "auth.isLogInAdmin() || auth.isLogInUser()" class="nav-item ">
           <a class="nav-link" routerLink="/event">Schedule</a>
         </li>
-        <li *ngIf="auth.isLogInUser() || auth.isLogInAdmin()" class="nav-item ">
+        <li *ngIf="auth.isLogInUser()" class="nav-item ">
           <a class="nav-link" routerLink="/profile">Profile</a>
+        </li>
+        <li *ngIf="auth.isLogInAdmin()" class="nav-item ">
+          <a class="nav-link" routerLink="/profile">Users</a>
         </li>
         <li *ngIf="auth.isLogInUser() || auth.isLogInAdmin()" class="nav-item ">
           <a class="nav-link" routerLink="" (click)="auth.logout()">Logout</a>

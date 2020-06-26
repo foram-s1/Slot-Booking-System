@@ -3,6 +3,7 @@ const users = express.Router()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User.model')
+const { use } = require('./Events')
 users.use(cors())
 
 users.post('/register', (req, res) => {
@@ -15,13 +16,12 @@ users.post('/register', (req, res) => {
     created: today
   }
   User.findOne({
-    email: req.body.email,
-    name: req.body.name
+          email: req.body.email
   }).then(user => {
       if (!user) {
         User.create(userData)
           .then(user => {
-            res.send('Registered Successfully')
+            res.send({user})
           })
           .catch(err => {
             res.send('error: ' + err)
@@ -77,6 +77,28 @@ users.put('/profile/:id', (req, res) => {
   }).catch((err) => {
       res.json({ err })
   })
+})
+
+users.get('/accounts', (req, res) => {
+  var decoded = jwt.verify(req.headers['authorization'], 'secret')
+    User.find({
+      $or:[
+        { roles:"faculty"},{roles:"club"}
+      ]
+    }).then((doc) => {
+        res.json({ doc })
+    }).catch((error) => {
+        res.json({ error })
+    })
+})
+
+users.delete('/account/:id', (req, res) => {
+  var decoded = jwt.verify(req.headers['authorization'], 'secret')
+    User.deleteOne({ _id: req.params.id }).then((doc) => {
+        res.json({ doc })
+    }).catch((err) => {
+        res.json({ err })
+    })
 })
 
 module.exports = users

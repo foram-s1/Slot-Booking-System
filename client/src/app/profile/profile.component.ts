@@ -23,12 +23,17 @@ export class ProfileComponent implements OnInit {
     this.auth.profile().subscribe(
       user=>{
         this.details= user
+        if(this.details.roles=="admin"){
+          this.accounts()
+        }
       },
       err=>{
         console.error(err)
       }
     )
+    
   }
+
   details: UserDetail= {
     _id: "",
     email: "",
@@ -36,6 +41,7 @@ export class ProfileComponent implements OnInit {
     name: "",
     roles: ""
   }
+
   changePswd(id:string, pswd:string): void {
     if(window.confirm("Are you sure you want to change password")){
       if(this.details.password===this.temp){ 
@@ -51,5 +57,68 @@ export class ProfileComponent implements OnInit {
       }
     }
     this.ngOnInit()
+  }
+
+  detail: UserDetail= {
+    _id: "",
+    email: "",
+    password: "",
+    name: "",
+    roles: ""
+  }
+
+  register():void{
+    if(this.detail.password===this.temp){ 
+      if(window.confirm("Are you sure you want to add New User?")){
+        this.auth.register(this.detail.email,this.detail.name, this.detail.password, this.detail.roles).subscribe(
+          (data:{error, user})=>{
+            if(data.error){
+              this.toastr.error("User already Exist")
+      			}else{
+              this.toastr.success('Registered Successfully!!')
+            }    
+          }
+        )
+      }
+      this.accounts()
+    }else{
+      this.toastr.error("Passwords must be equal")
+    }  
+    this.cancel()
+    this.accounts()
+  }
+account:UserDetail[]=[]
+
+  accounts() : void{
+    this.auth.accounts().subscribe((data: {doc,err})=>{
+      if(data.err){
+        console.log("Error in fetching tasks")
+      }else{
+        this.account = data.doc as UserDetail[]
+      }
+    })
+  }
+
+delAccount(id:string):void{
+  if(window.confirm("Are you sure you want to delete this account?")){
+    this.auth.delAccount(id).subscribe((data: {err, doc})=>{
+      if(!data.err){
+        this.accounts();
+        this.toastr.success("Deleted Successfully")
+      }else{
+        this.toastr.error("Error in deleting event!")
+      }
+    })
+  }
+}
+
+  cancel(): void{
+    this.detail={
+      _id: "",
+      email: "",
+      password: "",
+      name: "",
+      roles: ""
+    }
   }
 }

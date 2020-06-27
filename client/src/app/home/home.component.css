@@ -5,7 +5,14 @@
 	background-position: top;
 	height: 92.5vh;
 }
-
+.cursive
+{
+	font-family: 'Dancing Script', cursive;
+	font-weight: bolder;
+}
+h1{
+	margin-bottom: -0.2rem;
+}
 .centered {
 	position: absolute;
 	top: 50%;
@@ -19,5 +26,26 @@
 	color: black;
 	font-weight: bold;
 	font-size: 4vmax;
+	padding-top: 3rem;
   }
-  
+   .card-img {
+	/* Link to your background image using in the property below! */
+	background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url(/assets/home.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: top;
+	background-attachment: fixed;
+  }
+   .card-body {
+	padding-left: 58%;
+	margin-bottom: -1rem;
+  }
+  .text-right{
+	  padding-right: 6rem;
+  }
+  h5{
+	  margin-bottom: -0.7rem;
+  }
+  h3{
+	margin-bottom: -1.3rem;
+}

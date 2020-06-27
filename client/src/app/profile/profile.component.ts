@@ -54,7 +54,7 @@ account:UserDetail[]=[]
     
   }
 
-  changePswd(id:string, pswd:string): void {
+  changePswd( pswd:string): void {
     if(this.details.password===this.temp){ 
       if(window.confirm("Are you sure you want to change your password?")){
         this.auth.changePswd(this.details._id, this.temp).subscribe((data:{error, doc})=>{
@@ -68,6 +68,7 @@ account:UserDetail[]=[]
     }else{
       this.toastr.error("Password must be equal")
     }
+    this.temp=""
     this.ngOnInit()
   }
 

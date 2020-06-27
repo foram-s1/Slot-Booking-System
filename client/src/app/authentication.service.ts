@@ -79,7 +79,7 @@ export class AuthenticationService {
     const base = this.http.post('/users/login', user)
     const request = base.pipe( map((data: TokenResponse) => {
         if (data.token) {
-          this.toastr.success('Logged In Successfully!!')
+          this.toastr.success('Welcome, '+user.roles)
           this.saveToken(data.token)
         }else{
           this.toastr.error("Invalid Credentials");
@@ -126,7 +126,7 @@ delAccount(id:string){
 }
 
   public logout(): void {
-    this.toastr.success('Logged Out Successfully!!')
+    this.toastr.success('Thank you for visiting!!')
     this.token = ''
     window.localStorage.removeItem('usertoken')
     this.router.navigateByUrl('/')

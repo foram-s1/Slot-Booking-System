@@ -11,9 +11,6 @@
         <li *ngIf="!auth.isLogInUser() && !auth.isLogInAdmin()" class="nav-item">
           <a class="nav-link" routerLink="/">Home</a>
         </li>
-        <li *ngIf="!auth.isLogInUser() && !auth.isLogInAdmin()" class="nav-item ">
-          <a class="nav-link" routerLink="/login">Login</a>
-        </li>
         <li *ngIf= "auth.isLogInAdmin()" class="nav-item ">
           <a class="nav-link" routerLink="/request">Request</a>
         </li>

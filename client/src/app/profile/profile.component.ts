@@ -40,6 +40,7 @@ account:UserDetail[]=[]
   constructor(public auth:AuthenticationService, private toastr:ToastrService) { }
 
   ngOnInit(): void {
+    this.cancel()
     this.auth.profile().subscribe(
       user=>{
         this.details= user
@@ -55,7 +56,7 @@ account:UserDetail[]=[]
   }
 
   changePswd( pswd:string): void {
-    if(this.details.password===this.temp){ 
+    if(this.detail.password===this.temp){ 
       if(window.confirm("Are you sure you want to change your password?")){
         this.auth.changePswd(this.details._id, this.temp).subscribe((data:{error, doc})=>{
           if(data.error){

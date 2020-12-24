@@ -31,7 +31,6 @@
     }
 
     .searchbar:hover > .search_icon{
-    background: white;
     color: #e74c3c;
     }
 
@@ -42,7 +41,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
-    color:white;
-    text-decoration:none;
+    color: white;
     }

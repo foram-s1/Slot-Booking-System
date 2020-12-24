@@ -70,7 +70,6 @@ users.get('/profile', (req, res) => {
 
 users.put('/profile/:id', (req, res) => {
   var decoded = jwt.verify(req.headers['authorization'], 'secret')
-  console.log(req.body)
   User.updateOne({ _id: req.params.id }, req.body).then((doc) => {
       res.json({ doc })
   }).catch((err) => {

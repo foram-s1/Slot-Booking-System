@@ -43,7 +43,7 @@ export class RequestComponent implements OnInit {
     adminNote:"",
     status: ""
   }
-
+  searchValue: string = ""
   ngOnInit(): void {
     this.loadEvents()
   }
@@ -66,23 +66,28 @@ export class RequestComponent implements OnInit {
     })
   }
 
-  searchEvent(): void {
+  searchEvent() {
     this.count=0
     this.events=[]
-    if(this.event.title){
-      this.scheduleService.searchEvent(this.event.title).subscribe((data:{error,doc})=>{
-        if(data.error){
-          console.log("Error in fetching tasks")
-        }else{
-          data.doc.forEach(element => {
-            if(element.status==="Pending"){
-              this.events.push(element)
-            this.count++
-            }
-          });
+    if (this.searchValue) {
+      this.scheduleService.searchEvent(this.searchValue).subscribe((data: { err, doc }) => {
+        if (data.err) {
+          console.log("Error in fetching event")
+        } else {
+          if (this.auth.isLogInAdmin()) {
+            this.events = []
+            data.doc.forEach(element => {
+              if (element.status === "Pending") {
+                this.events.push(element)
+                this.count++
+              }
+            });
+          } else {
+            this.events = JSON.parse(JSON.stringify(data.doc))
+          }
         }
       })
-    }else{
+    } else {
       this.loadEvents()
     }
   }

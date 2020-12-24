@@ -7,15 +7,15 @@ import { AuthenticationService } from '../authentication.service';
 interface Event {
   _id: string,
   name: string,
-  user_id:string,
+  user_id: string,
   title: string,
-  startDate:string,
+  startDate: string,
   startTime: string,
-  endDate:string,
+  endDate: string,
   endTime: string,
   description: string,
   classRoom: string,
-  adminNote:string,
+  adminNote: string,
   status: string
 }
 
@@ -34,78 +34,74 @@ export class HistoryComponent implements OnInit {
   event: Event = {
     _id: "",
     name: "",
-    user_id:"",
+    user_id: "",
     title: "",
-    startDate:"",
-    startTime:"",
-    endDate:"",
+    startDate: "",
+    startTime: "",
+    endDate: "",
     endTime: "",
-    description:"",
+    description: "",
     classRoom: "",
-    adminNote:"",
+    adminNote: "",
     status: ""
   }
+  searchValue: string = ""
 
-  constructor(private scheduleService:ScheduleService,  private toastr: ToastrService, public auth:AuthenticationService) { }
+  constructor(private scheduleService: ScheduleService, private toastr: ToastrService, public auth: AuthenticationService) { }
 
   ngOnInit(): void {
     this.loadEvents()
   }
 
-  public count:number
-
   loadEvents(): void {
-    this.count=0
-    this.events=[]
-    this.scheduleService.getEvent().subscribe((data: {doc,err})=>{
-      if(data.err){
+    this.events = []
+    this.scheduleService.getEvent().subscribe((data: { doc, err }) => {
+      if (data.err) {
         console.log("Error in fetching tasks")
-      }else{
-        if(this.auth.isLogInAdmin()){
+      } else {
+        if (this.auth.isLogInAdmin()) {
           data.doc.forEach(element => {
-            if(element.status!="Pending"){
+            if (element.status != "Pending") {
               this.events.push(element)
-              this.count++
             }
           });
-        }else{
-          data.doc.forEach(element => {
-              this.events.push(element)
-              this.count++
-          });
+        } else {
+          this.events = data.doc as Event[]
         }
       }
     })
   }
 
-  searchEvent(): void {
-    this.count=0
-    this.events=[]
-    if(this.event.title){
-      this.scheduleService.searchEvent(this.event.title).subscribe((data:{error,doc})=>{
-        if(data.error){
+  searchEvent() {
+    if (this.searchValue) {
+      this.scheduleService.searchEvent(this.searchValue).subscribe((data: { err, doc }) => {
+        if (data.err) {
           console.log("Error in fetching event")
-        }else{
-          data.doc.forEach(element => {
-            if(element.status!="Pending"){
-              this.events.push(element)
-            this.count++
-            }
-          });
+        } else {
+          if (this.auth.isLogInAdmin()) {
+            this.events = []
+            data.doc.forEach(element => {
+              if (element.status != "Pending") {
+                this.events.push(element)
+              }
+            });
+          } else {
+            this.events = JSON.parse(JSON.stringify(data.doc))
+          }
         }
       })
-    }else{
+    } else {
       this.loadEvents()
     }
   }
 
   deleteEvent(id: string): void {
-    if(window.confirm("Are you sure you want to delete this event?")){
-      this.scheduleService.delEvent(id).subscribe((data: {err, doc})=>{
-        if(!data.err){
+    if (window.confirm("Are you sure you want to delete this event?")) {
+      this.scheduleService.delEvent(id).subscribe((data: { err, doc }) => {
+        if (!data.err) {
           this.loadEvents();
           this.toastr.success("Deleted Successfully")
-        }else{
+        } else {
           this.toastr.error("Error in deleting event!")
         }
       })

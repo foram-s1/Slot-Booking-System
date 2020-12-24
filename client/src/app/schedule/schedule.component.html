@@ -1,12 +1,13 @@
 <h2 class="text-center">Events</h2>
-<div class="container calendar">
-    <full-calendar #cal [options]='options'></full-calendar>
-</div>
 <div class="text-right" >
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal">
         Book Event
     </button>
 </div>
+<div class="container calendar">
+    <full-calendar #cal [options]='options'></full-calendar>
+</div>
+
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">

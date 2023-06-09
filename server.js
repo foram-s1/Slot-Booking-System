@@ -7,18 +7,32 @@ var Users = require('./routes/Users')
 var Events = require('./routes/Events')
 var app = express()
 
-app.use(bodyParser.json())
 app.use(cors())
+app.use(bodyParser.json())
 app.use(
   bodyParser.urlencoded({
     extended: false
   })
 )
 
+var Server = require('socket.io')
+var http = require('http').createServer(app)
+
+const io = Server(http);
+app.use((req, res, next) => {
+	req.io = io;
+	next();
+});
+
+io.on("connect", (socket) => {
+	console.log("Client connected");
+	// socket.on("disconnect", () => console.log("Client disconnected"));
+});
+
 const mongoURL = 'mongodb://localhost:27017/sbs'
 
 mongoose.connect( mongoURL, { 
-    useNewUrlParser: true, useUnifiedTopology: true 
+    useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false
 }).then(() => 
     console.log('MongoDB Connected')
 ).catch(err => 
@@ -28,6 +42,7 @@ mongoose.connect( mongoURL, {
 app.use('/users', Users)
 app.use('/api', Events)
 
-app.listen(port, function() {
+http.listen(port, function() {
   console.log('Server is running on port: ' + port)
 })
+

@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
+import {Howl} from 'howler';
 
 
 export interface UserDetails {
@@ -29,8 +30,16 @@ export interface TokenPayload {
 @Injectable()
 export class AuthenticationService {
   public token: string
-
+  
   constructor(private http: HttpClient, private router: Router, private toastr:ToastrService) {}
+
+  sound = new Howl({
+    src: ['/assets/sound.mp3']
+  });
+  //play sound notification
+  public playSound(): void {
+    this.sound.play()
+  };
 
   public saveToken(token: string): void {
     localStorage.setItem('usertoken', token)

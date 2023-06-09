@@ -3,6 +3,7 @@ import { ScheduleService } from '../schedule.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../authentication.service';
 import { AppComponent } from '../app.component';
+import { Socket } from 'ngx-socket-io';
 
 interface Event {
   _id: string,
@@ -26,7 +27,7 @@ interface Event {
 })
 export class RequestComponent implements OnInit {
 
-  constructor(private scheduleService:ScheduleService, public toastr:ToastrService, public auth:AuthenticationService, public app:AppComponent) { }
+  constructor(private scheduleService:ScheduleService, public toastr:ToastrService, public auth:AuthenticationService, public app:AppComponent, private socket: Socket) { }
   
   events:Event[]=[]
   event: Event = {
@@ -43,9 +44,17 @@ export class RequestComponent implements OnInit {
     adminNote:"",
     status: ""
   }
-  searchValue: string = ""
-  ngOnInit(): void {
+
+  searchValue: string = "";
+
+  ngOnInit(): void {   
     this.loadEvents()
+
+    if(this.auth.isLogInAdmin()){
+      this.socket.on("newEvent", (name)=>{
+        this.loadEvents()
+      })
+    }
   }
 
   public count:number

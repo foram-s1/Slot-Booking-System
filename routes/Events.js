@@ -30,6 +30,7 @@ router.get('/event/get', (req, res) => {
         res.json({ error })
     })
 })
+
 //add event
 router.post('/event/add', (req, res) => {
     var decoded = jwt.verify(req.headers['authorization'], 'secret')
@@ -88,6 +89,8 @@ router.post('/event/add', (req, res) => {
     }).then((docs) => {
         if (!docs) {
             newEvent.save().then((doc) => {
+                req.io.emit("newEvent", decoded.name);
+                console.log("New event requested.")
                 res.json({ doc })
             }).catch((error) => {
                 res.json({ error })
@@ -212,7 +215,8 @@ router.put('/event/:id', (req, res) => {
                 ]
             }).then((doc) => {
                 if (!doc) {
-                    Event.updateOne({ _id: req.params.id }, req.body).then((doc) => {
+                    Event.findOneAndUpdate({ _id: req.params.id }, req.body, { returnNewDocument: true, returnOriginal: false}).then((doc) => {
+                        req.io.emit("eventStatusUpdate", doc);
                         res.json({ doc })
                     }).catch((err) => {
                         res.json({ err })
@@ -227,11 +231,14 @@ router.put('/event/:id', (req, res) => {
             res.json({ err })
         })
     }else{
-        Event.updateOne({ _id: req.params.id }, req.body).then((doc) => {
-            res.json({ doc })
-        }).catch((err) => {
-            res.json({ err })
-        })
+            Event.findOneAndUpdate({ _id: req.params.id }, req.body, { returnNewDocument: true, returnOriginal: false}).then((doc) => {
+                req.io.emit("eventStatusUpdate", doc);
+                console.log(doc)
+                res.json({ doc })
+            }).catch((err) => {
+                res.json({ err })
+            })
+        
     }
 })
 

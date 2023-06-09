@@ -3,6 +3,7 @@ import { ScheduleService } from '../schedule.service';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { AuthenticationService } from '../authentication.service';
+import { Socket } from 'ngx-socket-io';
 
 interface Event {
   _id: string,
@@ -47,10 +48,16 @@ export class HistoryComponent implements OnInit {
   }
   searchValue: string = ""
 
-  constructor(private scheduleService: ScheduleService, private toastr: ToastrService, public auth: AuthenticationService) { }
+  constructor(private scheduleService: ScheduleService, private toastr: ToastrService, public auth: AuthenticationService, private socket: Socket) { }
 
   ngOnInit(): void {
     this.loadEvents()
+    this.socket.on("eventStatusUpdate", (data)=> {
+      console.log(data);
+      if(this.auth.isLogInUser() && this.auth.getUserDetails().name==data.name){
+        this.loadEvents()
+      }
+    })
   }
 
   loadEvents(): void {

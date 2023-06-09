@@ -4,6 +4,7 @@ import { ScheduleService } from '../schedule.service';
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid'
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
+import { Socket } from 'ngx-socket-io';
 declare var $: any;
 
 interface Event {
@@ -25,14 +26,23 @@ interface Event {
 	templateUrl: './schedule.component.html',
 	styleUrls: ['./schedule.component.css']
 })
+
 export class ScheduleComponent implements OnInit, AfterViewInit{
 
-	constructor(private scheduleAPI: ScheduleService, private toastr: ToastrService) { }
+	constructor(private scheduleAPI: ScheduleService, private toastr: ToastrService, private socket: Socket) { }
 	@ViewChild('cal', { static: false }) calendar: FullCalendarComponent
 	calAPI
-	ngOnInit(): void {
-
+	
+	ngOnInit(){
+		this.socket.on("eventStatusUpdate", (data) => {
+			// console.log(data)
+			if(data.status==="Accepted"){
+				this.calAPI = this.calendar.getApi()
+				this.loadData()
+			}
+		})
 	}
+
 	events: Event[] = []
 	event: Event = {
 		_id: "",
@@ -102,9 +112,9 @@ export class ScheduleComponent implements OnInit, AfterViewInit{
 			  this.toastr.error("Clash Found")
 			}else{
 			  this.toastr.success('Request Sent Successfully!!')
+			  this.cancel();
 			}
 		  })
-			this.cancel();
 		}
 	}	
 

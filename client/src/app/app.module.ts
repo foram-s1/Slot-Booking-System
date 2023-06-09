@@ -19,6 +19,8 @@ import { HistoryComponent } from './history/history.component';
 import { RequestComponent } from './request/request.component';
 import { ProfileComponent } from './profile/profile.component';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,6 +30,8 @@ const routes: Routes = [
   { path: 'request', component:RequestComponent, canActivate:[AuthGuardService]},
   { path:'profile', component:ProfileComponent, canActivate:[AuthGuardService]}
 ]
+
+const config: SocketIoConfig = { url: "http://localhost:3000", options: {path: ''}};
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin
@@ -49,6 +53,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FormsModule,
     RouterModule.forRoot(routes),
     ToastrModule.forRoot({timeOut:5000}),
+    SocketIoModule.forRoot(config),
     BrowserAnimationsModule,
     FullCalendarModule
   ],
